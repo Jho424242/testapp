@@ -11,3 +11,14 @@
 *   A graph has been added to visualize quiz history.
 *   Fixed missing useEffect import in DailyCheckin component.
 *   Added 'daily_checkins' table to Supabase database with required columns.
+*   Implemented UI/UX improvements to Protocol component:
+    - Gradient background and shadow effects
+    - Consistent indigo/purple color scheme
+    - Better typography and spacing
+    - Checkmark icons for recommendations
+    - Hover animations
+*   Implemented UI/UX improvements to LongevityQuiz component:
+    - Custom styled radio buttons
+    - Animated result display
+    - Consistent styling with other components
+    - Improved form controls

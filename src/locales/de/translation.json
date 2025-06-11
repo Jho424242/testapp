@@ -1,4 +1,7 @@
 {
+  "protocol": {
+    "personalized_recommendations": "Personalisierte Empfehlungen"
+  },
   "daily_checkin": "Tägliche Überprüfung",
   "date": "Datum",
   "feeling_rating": "Gefühlsbewertung",
@@ -40,5 +43,17 @@
   "your_progress_over_time": "Ihr Fortschritt im Laufe der Zeit",
   "loading_history": "Lade Verlauf...",
   "no_quiz_history": "Sie haben noch keine Quiz abgeschlossen.",
-  "take_a_quiz_to_start": "Machen Sie ein Quiz, um Ihren Fortschritt zu verfolgen!"
+  "take_a_quiz_to_start": "Machen Sie ein Quiz, um Ihren Fortschritt zu verfolgen!",
+  "current_rating": "Aktuelle Bewertung: {{rating}}",
+  "rating_scale": {
+    "low": "1",
+    "mid": "5",
+    "high": "10"
+  },
+  "validation": {
+    "rating_range": "Bitte wählen Sie eine Bewertung zwischen 1 und 10",
+    "save_error": "Speichern des Check-ins fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "save_success": "Check-in erfolgreich gespeichert!"
+  }
 }

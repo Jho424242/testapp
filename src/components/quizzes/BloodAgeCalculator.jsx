@@ -70,17 +70,21 @@ const BloodAgeCalculator = () => {
     setResult(biologicalAge.toFixed(2));
 
     const { error } = await supabase
-        .from('quiz_attempts')
-        .upsert(
-          { user_id: user.id, quiz_name: 'blood_age_calculator', score: Math.round(biologicalAge), answers: biomarkers, created_at: testDate },
-          { onConflict: ['user_id', 'quiz_name'] }
-        );
-    if (error) console.log('Error inserting quiz result:', error);
+      .from('quiz_attempts')
+      .insert([
+        { user_id: user.id, quiz_name: 'blood_age_calculator', score: Math.round(biologicalAge), answers: biomarkers, created_at: testDate }
+      ]);
+    if (error) {
+      console.log('Error inserting quiz result:', error);
+      alert('Failed to save quiz result. Please try again.');
+    } else {
+      alert('Quiz result saved successfully!');
+    }
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-8">
-      <h3 className="text-2xl font-bold mb-6">{t('blood_age_calculator')}</h3>
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg rounded-xl p-8 transition-all duration-300 hover:shadow-xl">
+      <h3 className="text-2xl font-bold text-indigo-800 mb-6">{t('blood_age_calculator')}</h3>
       {result === null ? (
         <div>
           <div className="mb-4">
@@ -88,7 +92,7 @@ const BloodAgeCalculator = () => {
             <DatePicker
               selected={testDate}
               onChange={(date) => setTestDate(date)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-4 py-3 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
             />
           </div>
           {Object.keys(biomarkers).map(key => (
@@ -106,14 +110,17 @@ const BloodAgeCalculator = () => {
           ))}
           <button
             onClick={calculateResult}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-md text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300"
           >
             Calculate
           </button>
         </div>
       ) : (
         <div>
-          <p className="text-lg">Your estimated blood age is: {result} years</p>
+          <div className="space-y-6">
+            <p className="text-2xl font-bold text-indigo-800">Your estimated blood age is:</p>
+            <p className="text-4xl font-extrabold text-purple-700">{result} years</p>
+          </div>
           <Protocol quizName="blood_age_calculator" score={result} />
         </div>
       )}

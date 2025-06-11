@@ -1,4 +1,7 @@
 {
+  "protocol": {
+    "personalized_recommendations": "Personalized Recommendations"
+  },
   "daily_checkin": "Daily Check-in",
   "date": "Date",
   "feeling_rating": "Feeling Rating",
@@ -40,5 +43,17 @@
   "your_progress_over_time": "Your Progress Over Time",
   "loading_history": "Loading history...",
   "no_quiz_history": "You haven't taken any quizzes yet.",
-  "take_a_quiz_to_start": "Take a quiz to start tracking your progress!"
+  "take_a_quiz_to_start": "Take a quiz to start tracking your progress!",
+  "current_rating": "Current rating: {{rating}}",
+  "rating_scale": {
+    "low": "1",
+    "mid": "5",
+    "high": "10"
+  },
+  "validation": {
+    "rating_range": "Please select a feeling rating between 1 and 10",
+    "save_error": "Failed to save check-in. Please try again.",
+    "unexpected_error": "An unexpected error occurred. Please try again.",
+    "save_success": "Check-in saved successfully!"
+  }
 }
