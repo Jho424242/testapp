@@ -1,4 +1,10 @@
 {
+  "daily_checkin": "Daily Check-in",
+  "date": "Date",
+  "feeling_rating": "Feeling Rating",
+  "notes": "Notes",
+  "tracked_recommendations": "Tracked Recommendations",
+  "submit": "Submit",
   "welcome": "Welcome to the WLXR Health Optimization Platform",
   "journey": "Your journey to a healthier, longer life starts here.",
   "login": "Login",

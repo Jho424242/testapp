@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
+import Protocol from '../Protocol';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -70,7 +71,10 @@ const BloodAgeCalculator = () => {
 
     const { error } = await supabase
         .from('quiz_attempts')
-        .insert([{ user_id: user.id, quiz_name: 'blood_age_calculator', score: Math.round(biologicalAge), answers: biomarkers, created_at: testDate }]);
+        .upsert(
+          { user_id: user.id, quiz_name: 'blood_age_calculator', score: Math.round(biologicalAge), answers: biomarkers, created_at: testDate },
+          { onConflict: ['user_id', 'quiz_name'] }
+        );
     if (error) console.log('Error inserting quiz result:', error);
   };
 
@@ -95,6 +99,7 @@ const BloodAgeCalculator = () => {
                 name={key}
                 value={biomarkers[key]}
                 onChange={handleInputChange}
+                placeholder={key}
                 className="w-full px-3 py-2 border rounded"
               />
             </div>
@@ -109,6 +114,7 @@ const BloodAgeCalculator = () => {
       ) : (
         <div>
           <p className="text-lg">Your estimated blood age is: {result} years</p>
+          <Protocol quizName="blood_age_calculator" score={result} />
         </div>
       )}
     </div>

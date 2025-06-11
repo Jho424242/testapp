@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
+import Protocol from '../Protocol';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -30,7 +31,10 @@ const MentalHealthAgeAssessment = () => {
 
     const { error } = await supabase
       .from('quiz_attempts')
-      .insert([{ user_id: user.id, quiz_name: 'mental_health_assessment', score: score, answers: answers, created_at: testDate }]);
+      .upsert(
+        { user_id: user.id, quiz_name: 'mental_health_assessment', score: score, answers: answers, created_at: testDate },
+        { onConflict: ['user_id', 'quiz_name'] }
+      );
     if (error) console.log('Error inserting quiz result:', error);
   };
 
@@ -51,23 +55,25 @@ const MentalHealthAgeAssessment = () => {
             <div key={q.id} className="mb-4">
               <p className="font-semibold">{q.text}</p>
               <div className="flex items-center space-x-4">
-                <label>
+                <label className="flex items-center">
                   <input
                     type="radio"
+                    className="form-radio h-5 w-5 text-indigo-600"
                     name={q.id}
                     value="yes"
                     onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                   />
-                  Yes
+                  <span className="ml-2 text-gray-700">Yes</span>
                 </label>
-                <label>
+                <label className="flex items-center">
                   <input
                     type="radio"
+                    className="form-radio h-5 w-5 text-indigo-600"
                     name={q.id}
                     value="no"
                     onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                   />
-                  No
+                  <span className="ml-2 text-gray-700">No</span>
                 </label>
               </div>
             </div>
@@ -82,6 +88,7 @@ const MentalHealthAgeAssessment = () => {
       ) : (
         <div>
           <p className="text-lg">Your estimated mental health age is: {result} years</p>
+          <Protocol quizName="mental_health_assessment" score={result} />
         </div>
       )}
     </div>

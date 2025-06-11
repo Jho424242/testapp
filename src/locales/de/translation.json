@@ -1,5 +1,11 @@
 {
-  "welcome": "Willkommen auf der WLXR Health Optimization Platform",
+  "daily_checkin": "Tägliche Überprüfung",
+  "date": "Datum",
+  "feeling_rating": "Gefühlsbewertung",
+  "notes": "Notizen",
+  "tracked_recommendations": "Verfolgte Empfehlungen",
+  "submit": "Einreichen",
+  "welcome": "Willkommen bei der WLXR-Gesundheitsoptimierungsplattform",
   "journey": "Ihre Reise zu einem gesünderen, längeren Leben beginnt hier.",
   "login": "Anmelden",
   "signup": "Registrieren",

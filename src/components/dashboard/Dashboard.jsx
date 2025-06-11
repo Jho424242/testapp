@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
 import QuizHistory from './QuizHistory';
+import Protocol from '../Protocol';
+import DailyCheckin from '../DailyCheckin';
 
 const Dashboard = () => {
   const { t } = useTranslation();
   const { user, updateSubscription } = useAuth();
+  const [recommendations, setRecommendations] = useState({});
 
   const quizzes = [
     {
@@ -31,6 +34,30 @@ const Dashboard = () => {
     const newSubscription = user.user_metadata.subscription === 'pro' ? 'free' : 'pro';
     updateSubscription(newSubscription);
   };
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      const { data, error } = await supabase
+        .from('quiz_attempts')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching quiz attempts:', error);
+      } else {
+        const latestRecommendations = {};
+        data.forEach(attempt => {
+          if (!latestRecommendations[attempt.quiz_name]) {
+            latestRecommendations[attempt.quiz_name] = { score: attempt.score };
+          }
+        });
+        setRecommendations(latestRecommendations);
+      }
+    };
+
+    fetchRecommendations();
+  }, [user.id]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -80,6 +107,29 @@ const Dashboard = () => {
         <h3 className="text-2xl font-bold text-gray-700 mb-4">{t('quiz_history')}</h3>
         <QuizHistory />
       </div>
+
+      <DailyCheckin />
+
+      {recommendations && recommendations.mental_health_assessment && (
+        <div>
+          <h3 className="text-2xl font-bold text-gray-700 mb-4">Mental Health Protocol</h3>
+          <Protocol quizName="mental_health_assessment" score={recommendations.mental_health_assessment.score} />
+        </div>
+      )}
+
+      {recommendations && recommendations.longevity_quiz && (
+        <div>
+          <h3 className="text-2xl font-bold text-gray-700 mb-4">Longevity Protocol</h3>
+          <Protocol quizName="longevity_quiz" score={recommendations.longevity_quiz.score} />
+        </div>
+      )}
+
+      {recommendations && recommendations.blood_age_calculator && (
+        <div>
+          <h3 className="text-2xl font-bold text-gray-700 mb-4">Blood Age Protocol</h3>
+          <Protocol quizName="blood_age_calculator" score={recommendations.blood_age_calculator.score} />
+        </div>
+      )}
     </div>
   );
 };
