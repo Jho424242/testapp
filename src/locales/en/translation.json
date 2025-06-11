@@ -1,6 +1,9 @@
 {
   "protocol": {
-    "personalized_recommendations": "Personalized Recommendations"
+    "personalized_recommendations": "Personalized Recommendations",
+    "mental_health": "Mental Health Protocol",
+    "longevity": "Longevity Protocol",
+    "blood_age": "Blood Age Protocol"
   },
   "daily_checkin": "Daily Check-in",
   "date": "Date",

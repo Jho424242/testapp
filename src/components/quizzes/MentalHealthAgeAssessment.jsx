@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from '../layout/Modal';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import Protocol from '../Protocol';
@@ -11,6 +12,8 @@ const MentalHealthAgeAssessment = () => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [testDate, setTestDate] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const questions = [
     { id: 'q1', text: 'Do you feel stressed often?' },
@@ -36,10 +39,11 @@ const MentalHealthAgeAssessment = () => {
       ]);
     if (error) {
       console.log('Error inserting quiz result:', error);
-      alert('Failed to save quiz result. Please try again.');
+      setModalMessage(t('validation.save_error'));
     } else {
-      alert('Quiz result saved successfully!');
+      setModalMessage(t('validation.save_success'));
     }
+    setShowModal(true);
   };
 
   return (
@@ -59,25 +63,25 @@ const MentalHealthAgeAssessment = () => {
             <div key={q.id} className="mb-4">
               <p className="font-semibold">{q.text}</p>
               <div className="flex items-center space-x-6">
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-3">
                   <input
                     type="radio"
-                    className="form-radio h-6 w-6 text-indigo-600 border-2 border-indigo-300 focus:ring-indigo-500"
+                    className="form-radio h-5 w-5 text-indigo-600 border-2 border-indigo-300 focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400"
                     name={q.id}
                     value="yes"
                     onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                   />
-                  <span className="ml-2 text-gray-700">Yes</span>
+                  <span className="text-gray-700">Yes</span>
                 </label>
-                <label className="flex items-center">
+                <label className="flex items-center space-x-3">
                   <input
                     type="radio"
-                    className="form-radio h-5 w-5 text-indigo-600"
+                    className="form-radio h-5 w-5 text-indigo-600 border-2 border-indigo-300 focus:ring-2 focus:ring-indigo-500 transition-all hover:border-indigo-400"
                     name={q.id}
                     value="no"
                     onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                   />
-                  <span className="ml-2 text-gray-700">No</span>
+                  <span className="text-gray-700">No</span>
                 </label>
               </div>
             </div>
@@ -98,6 +102,10 @@ const MentalHealthAgeAssessment = () => {
           <Protocol quizName="mental_health_assessment" score={result} />
         </div>
       )}
+      
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <p className="text-lg font-medium text-gray-800">{modalMessage}</p>
+      </Modal>
     </div>
   );
 };

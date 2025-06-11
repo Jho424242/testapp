@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Modal from '../layout/Modal';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import Protocol from '../Protocol';
@@ -32,6 +33,8 @@ const BloodAgeCalculator = () => {
   });
   const [result, setResult] = useState(null);
   const [testDate, setTestDate] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleInputChange = (e) => {
     setBiomarkers({ ...biomarkers, [e.target.name]: e.target.value });
@@ -76,10 +79,11 @@ const BloodAgeCalculator = () => {
       ]);
     if (error) {
       console.log('Error inserting quiz result:', error);
-      alert('Failed to save quiz result. Please try again.');
+      setModalMessage(t('validation.save_error'));
     } else {
-      alert('Quiz result saved successfully!');
+      setModalMessage(t('validation.save_success'));
     }
+    setShowModal(true);
   };
 
   return (
@@ -104,7 +108,7 @@ const BloodAgeCalculator = () => {
                 value={biomarkers[key]}
                 onChange={handleInputChange}
                 placeholder={key}
-                className="w-full px-3 py-2 border rounded"
+                className="w-full px-4 py-3 border border-indigo-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all hover:border-indigo-300"
               />
             </div>
           ))}
@@ -124,6 +128,10 @@ const BloodAgeCalculator = () => {
           <Protocol quizName="blood_age_calculator" score={result} />
         </div>
       )}
+      
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <p className="text-lg font-medium text-gray-800">{modalMessage}</p>
+      </Modal>
     </div>
   );
 };

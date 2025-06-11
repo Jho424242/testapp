@@ -17,8 +17,23 @@
     - Better typography and spacing
     - Checkmark icons for recommendations
     - Hover animations
-*   Implemented UI/UX improvements to LongevityQuiz component:
-    - Custom styled radio buttons
-    - Animated result display
-    - Consistent styling with other components
-    - Improved form controls
+*   Implemented UI/UX improvements to all quiz components:
+    - BloodAgeCalculator:
+      - Standardized input styling
+      - Added hover/focus effects
+      - Implemented styled modal dialogs
+    - MentalHealthAgeAssessment:
+      - Consistent radio button sizing
+      - Added hover animations
+      - Standardized spacing
+      - Implemented styled modal dialogs
+    - LongevityQuiz:
+      - Custom styled radio buttons
+      - Animated result display
+      - Consistent styling with other components
+      - Improved form controls
+*   Improved Dashboard layout:
+    - Two-column grid for better organization
+    - Consistent white background and shadow
+    - Better spacing between components
+*   Added missing translations for protocol titles

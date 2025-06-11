@@ -103,33 +103,39 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="space-y-6">
-        <h3 className="text-3xl font-bold text-indigo-900 mb-6">{t('quiz_history')}</h3>
-        <QuizHistory />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-8">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <h3 className="text-3xl font-bold text-indigo-900 mb-6">{t('quiz_history')}</h3>
+            <QuizHistory />
+          </div>
+          
+          <DailyCheckin className="bg-white p-6 rounded-xl shadow-lg" />
+        </div>
+
+        <div className="space-y-8">
+          {recommendations && recommendations.mental_health_assessment && (
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <h3 className="text-3xl font-bold text-indigo-900 mb-6">{t('protocol.mental_health')}</h3>
+              <Protocol quizName="mental_health_assessment" score={recommendations.mental_health_assessment.score} />
+            </div>
+          )}
+
+          {recommendations && recommendations.longevity_quiz && (
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <h3 className="text-3xl font-bold text-indigo-900 mb-6">{t('protocol.longevity')}</h3>
+              <Protocol quizName="longevity_quiz" score={recommendations.longevity_quiz.score} />
+            </div>
+          )}
+
+          {recommendations && recommendations.blood_age_calculator && (
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <h3 className="text-3xl font-bold text-indigo-900 mb-6">{t('protocol.blood_age')}</h3>
+              <Protocol quizName="blood_age_calculator" score={recommendations.blood_age_calculator.score} />
+            </div>
+          )}
+        </div>
       </div>
-
-      <DailyCheckin className="space-y-6" />
-
-      {recommendations && recommendations.mental_health_assessment && (
-        <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-indigo-900 mb-6">Mental Health Protocol</h3>
-          <Protocol quizName="mental_health_assessment" score={recommendations.mental_health_assessment.score} />
-        </div>
-      )}
-
-      {recommendations && recommendations.longevity_quiz && (
-        <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-indigo-900 mb-6">Longevity Protocol</h3>
-          <Protocol quizName="longevity_quiz" score={recommendations.longevity_quiz.score} />
-        </div>
-      )}
-
-      {recommendations && recommendations.blood_age_calculator && (
-        <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-indigo-900 mb-6">Blood Age Protocol</h3>
-          <Protocol quizName="blood_age_calculator" score={recommendations.blood_age_calculator.score} />
-        </div>
-      )}
     </div>
   );
 };
